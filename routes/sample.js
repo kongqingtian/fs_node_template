@@ -1,45 +1,63 @@
 const express = require('express');
 const router = express.Router();
-// const rb = require('@flexsolver/flexrb');
+const rb = require('@flexsolver/flexrb');
+//Response Builder
 // const qp = require('@flexsolver/flexqp-pooling');
 
 
 router.get('/', async function (req, res, next) {
   try {
-    // console.log(req.user);
-    // let name = `JBL Boombox`;
-    // let result = await qp.executeAndFetchPromise(`select * from products where name = ? `, [name]);
-    // res.json(rb.build(result, 'Success!'));
+    res.json(rb.build(
+      {
+        say: `hello world`
+      }
+    )
+    );
   } catch (err) {
     next(err);
   }
 });
+
+
+router.get('/error', async function (req, res, next) {
+  try {
+    let err = new Error(`expired`) //Exception
+    err.status = 409;
+    throw err;
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 router.get('/:param', async function (req, res, next) {
   try {
-    console.log(req.user);
-    res.json(rb.build({ message: req.params.param }, 'Success!'));
+    res.json(
+      { message: req.params.param }
+    );
   } catch (err) {
     next(err);
   }
 });
 
+
+
 router.post('/', async function (req, res, next) {
   try {
-    // let body = req.body;
-    // let dao = buildConfigDao(body);
-    // let insertResult = await qp.executeUpdatePromise(`insert into configs set ?`, [dao]);
-    // res.json(rb.build(insertResult, 'Success!'));
+    let body = req.body;
+    console.log(body);
+    body.id = 0; //false null
+    body = build(body);
+    res.json(body);
   } catch (err) {
     next(err);
   }
-  function buildConfigDao(body) {
+  function build(body) {
     let dao = {
-      terminalName: body.name
+      id: body.id || 9999,
+      id2: body.id2 || 8888
     }
     return dao;
   }
-
-
 });
 module.exports = router;

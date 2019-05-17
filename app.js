@@ -4,16 +4,16 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 let logger = require('morgan');
-const jwt = require(`jsonwebtoken`)
+const jwt = require(`jsonwebtoken`); 
 const JWT_SECRET = require('./resources/global').JWT_SECRET;
-// let rb = require('@flexsolver/flexrb');
+let rb = require('@flexsolver/flexrb');
 let app = express();
 let server = require('http').Server(app); //declare server here
 let io //= require('socket.io')(server); // declare io here
 //require('./controllers/SocketController/socketServer').init(io); init socket server
 let cors = require(`cors`);
-// let qp = require('@flexsolver/flexqp-pooling');
-// qp.presetConnection(require(`./dbconfig.json`));
+let qp = require('@flexsolver/flexqp-pooling');
+qp.presetConnection(require(`./dbconfig.json`));
 app.use(logger('dev'));
 app.use(bodyParser.json({ limit: '500mb' }));
 app.use(bodyParser.urlencoded({ limit: '500mb', extended: true, parameterLimit: 50000 }));
@@ -80,6 +80,7 @@ async function logResponseBody(req, res, next) {
 // app.use(attachedIO); if attached IO is needed in res.io
 // app.use(verifyToken);  //if you would like to protect the entire API below
 app.use('/index', require(`./routes/sample`));
+app.use('/sql', require(`./routes/sql`));
 
 
 
