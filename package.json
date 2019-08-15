@@ -6,8 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@flexsolver/flexqp-pooling": "^0.7.0",
-    "@flexsolver/flexrb": "^0.2.0",
+    "@flexsolver/flexqp-pooling": "^1.5.0",
+    "@flexsolver/flexrb": "^1.0.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
